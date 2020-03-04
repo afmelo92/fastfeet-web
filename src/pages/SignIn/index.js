@@ -1,20 +1,52 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Form } from '@unform/web';
+import * as Yup from 'yup';
+
 import Input from '~/components/Input';
 
 import logo from '~/assets/images/fastfeet-logo.png';
 
-// import { Container } from './styles';
-
 export default function SignIn() {
-  function handleSubmit(data) {
-    console.tron.log(data);
+  const formRef = useRef(null);
+
+  async function handleSubmit({ email, password }) {
+    try {
+      formRef.current.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email('Insira um e-mail válido')
+          .required('O e-mail é obrigatório'),
+        password: Yup.string().required('A senha é obrigatória'),
+      });
+
+      await schema.validate(
+        { email, password },
+        {
+          abortEarly: false,
+        }
+      );
+
+      // Validation passed
+
+      console.tron.log({ email, password });
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+
+        formRef.current.setErrors(validationErrors);
+      }
+    }
   }
   return (
     <>
       <img src={logo} alt="Fastfeet" />
 
-      <Form onSubmit={handleSubmit}>
+      <Form ref={formRef} onSubmit={handleSubmit}>
         <div>SEU E-MAIL</div>
         <Input name="email" type="email" placeholder="exemplo@email.com" />
         <div>SUA SENHA</div>
