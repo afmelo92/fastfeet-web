@@ -30,10 +30,6 @@ export default function SignIn() {
           abortEarly: false,
         }
       );
-
-      // Validation passed
-
-      console.tron.log({ email, password });
     } catch (err) {
       const validationErrors = {};
 
