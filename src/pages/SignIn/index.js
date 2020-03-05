@@ -1,15 +1,19 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import Input from '~/components/Input';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 import logo from '~/assets/images/fastfeet-logo.png';
 
 export default function SignIn() {
   const formRef = useRef(null);
+  const dispatch = useDispatch();
 
   async function handleSubmit({ email, password }) {
+    dispatch(signInRequest(email, password));
     try {
       formRef.current.setErrors({});
 
