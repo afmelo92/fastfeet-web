@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
@@ -11,6 +11,7 @@ import logo from '~/assets/images/fastfeet-logo.png';
 export default function SignIn() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
   async function handleSubmit({ email, password }) {
     dispatch(signInRequest(email, password));
@@ -52,7 +53,9 @@ export default function SignIn() {
         <div>SUA SENHA</div>
         <Input name="password" type="password" placeholder="***********" />
 
-        <button type="submit">Entrar no sistema</button>
+        <button type="submit">
+          {loading ? 'Carregando...' : 'Entrar no sistema'}
+        </button>
       </Form>
     </>
   );
