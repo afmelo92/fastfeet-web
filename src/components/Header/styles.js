@@ -26,9 +26,14 @@ export const Content = styled.div`
     }
 
     a {
+      font-size: 15px;
       font-weight: bold;
       color: #999;
       margin-right: 20px;
+    }
+
+    a.current {
+      color: #444;
     }
   }
 

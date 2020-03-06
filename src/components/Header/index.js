@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import logo from '~/assets/images/fastfeet-logo.png';
 
-import { Container, Content, Profile } from './styles';
+import { Container, Content } from './styles';
 
 export default function Header() {
   return (
@@ -12,12 +12,12 @@ export default function Header() {
         <nav>
           <img src={logo} alt="Fastfeet" />
 
-          <Link active to="/dashboard">
+          <NavLink activeClassName="current" to="/dashboard">
             ENCOMENDAS
-          </Link>
-          <Link to="/deliverers">ENTREGADORES</Link>
-          <Link to="/recipients">DESTINATÁRIOS</Link>
-          <Link to="/delivery/problems">PROBLEMAS</Link>
+          </NavLink>
+          <NavLink to="/deliverers">ENTREGADORES</NavLink>
+          <NavLink to="/recipients">DESTINATÁRIOS</NavLink>
+          <NavLink to="/delivery/problems">PROBLEMAS</NavLink>
         </nav>
 
         <aside>
