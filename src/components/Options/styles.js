@@ -15,7 +15,7 @@ export const OptionList = styled.div`
   border-radius: 5px;
   background-color: #fff;
   padding: 15px 5px;
-  display: ${props => (props.visible ? 'block' : 'none')};
+  display: ${props => (props.visible ? 'block' : 'none')} !important;
 
   &::before {
     content: '';

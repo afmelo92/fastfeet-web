@@ -7,7 +7,7 @@ import { Container, OptionList } from './styles';
 export default function Options() {
   return (
     <Container>
-      <OptionList>
+      <OptionList visible={false}>
         <button type="button">
           <IoMdEye size={20} color="#8E5BE8" />
           <p>Visualizar</p>

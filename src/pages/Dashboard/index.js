@@ -2,6 +2,7 @@ import React from 'react';
 import { MdMoreHoriz, MdAdd } from 'react-icons/md';
 
 import Options from '~/components/Options';
+import Select from '~/components/Select';
 
 import { Wrapper, Container, Table, THeader, TRow, StatusTag } from './styles';
 
@@ -10,7 +11,7 @@ export default function Dashboard() {
     <Wrapper>
       <h1>Gerenciando encomendas</h1>
       <Container>
-        <input type="text" placeholder="Buscar por encomendas" />
+        <Select type="text" placeholder="Buscar por encomendas" />
         <button type="button">
           <MdAdd size={30} color="#fff" />
           <p>CADASTRAR</p>
@@ -49,7 +50,7 @@ export default function Dashboard() {
           <div>
             <button type="button">
               <MdMoreHoriz size={30} color="#C6C6C6" />
-              <Options />
+              <Options visible />
             </button>
           </div>
         </TRow>
