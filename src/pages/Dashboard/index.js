@@ -1,84 +1,109 @@
 import React from 'react';
+import { MdMoreHoriz, MdAdd } from 'react-icons/md';
 
-import dot from '~/assets/images/dot.png';
+import Options from '~/components/Options';
 
-import {
-  Wrapper,
-  Container,
-  DeliverymanCell,
-  StatusCell,
-  TableHeader,
-  TableRow,
-} from './styles';
+import { Wrapper, Container, Table, THeader, TRow, StatusTag } from './styles';
 
 export default function Dashboard() {
   return (
     <Wrapper>
+      <h1>Gerenciando encomendas</h1>
       <Container>
-        <h1>Gerenciando encomendas</h1>
         <input type="text" placeholder="Buscar por encomendas" />
+        <button type="button">
+          <MdAdd size={30} color="#fff" />
+          <p>CADASTRAR</p>
+        </button>
       </Container>
 
-      <TableHeader>
-        <div>ID</div>
-        <div>Destinatário</div>
-        <div>Entregador</div>
-        <div>Cidade</div>
-        <div>Estado</div>
-        <div>Status</div>
-        <div>Ações</div>
-      </TableHeader>
-      {/** ROW */}
-      <TableRow>
-        <div>#01</div>
-        <div>Ludwig van Beethoven</div>
-        <div>
-          <DeliverymanCell>
+      <Table>
+        <THeader>
+          <div>ID</div>
+          <div>Destinatário</div>
+          <div>Entregador</div>
+          <div>Cidade</div>
+          <div>Estado</div>
+          <div>Status</div>
+          <div>Ações</div>
+        </THeader>
+        <TRow>
+          <div>#01</div>
+          <div>Ludwig Van Beethoven</div>
+          <div>
             <img
               width="35"
               src="https://ui-avatars.com/api/?name=John+Doe"
               alt=""
             />
-            John Doe
-          </DeliverymanCell>
-        </div>
-        <div>Rio do Sul</div>
-        <div>Santa Catarina</div>
-        <div>
-          <StatusCell>
-            <img src={dot} alt="" width="10" />
-            ENTREGUE
-          </StatusCell>
-        </div>
-        <div>
-          <button type="button">...</button>
-        </div>
-      </TableRow>
-      <TableRow>
-        <div>#01</div>
-        <div>Ludwig van Beethoven</div>
-        <div>
-          <DeliverymanCell>
+            <p>John Doe</p>
+          </div>
+          <div>Rio do sul</div>
+          <div>SC</div>
+          <div>
+            <StatusTag>
+              <div />
+              ENTREGUE
+            </StatusTag>
+          </div>
+          <div>
+            <button type="button">
+              <MdMoreHoriz size={30} color="#C6C6C6" />
+              <Options />
+            </button>
+          </div>
+        </TRow>
+        <TRow>
+          <div>#02</div>
+          <div>Ludwig Van Beethoven</div>
+          <div>
             <img
               width="35"
               src="https://ui-avatars.com/api/?name=Antonio+Banderas"
               alt=""
             />
-            Antonio Banderas
-          </DeliverymanCell>
-        </div>
-        <div>Rio do Sul</div>
-        <div>Santa Catarina</div>
-        <div>
-          <StatusCell>
-            <img src={dot} alt="" width="10" />
-            ENTREGUE
-          </StatusCell>
-        </div>
-        <div>
-          <button type="button">...</button>
-        </div>
-      </TableRow>
+            <p>Antonio Banderas</p>
+          </div>
+          <div>Rio do sul</div>
+          <div>SC</div>
+          <div>
+            <StatusTag>
+              <div />
+              ENTREGUE
+            </StatusTag>
+          </div>
+          <div>
+            <button type="button">
+              <MdMoreHoriz size={30} color="#C6C6C6" />
+            </button>
+          </div>
+        </TRow>
+        <TRow>
+          <div>#02</div>
+          <div>Ludwig Van Beethoven</div>
+          <div>
+            <img
+              width="35"
+              src="https://ui-avatars.com/api/?name=Antonio+Banderas"
+              alt=""
+            />
+            <p>Antonio Banderas</p>
+          </div>
+          <div>Rio do sul</div>
+          <div>SC</div>
+          <div>
+            <StatusTag>
+              <div />
+              ENTREGUE
+            </StatusTag>
+          </div>
+          <div>
+            <button type="button">
+              <MdMoreHoriz size={30} color="#C6C6C6" />
+            </button>
+          </div>
+        </TRow>
+      </Table>
     </Wrapper>
   );
 }

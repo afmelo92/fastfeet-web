@@ -3,76 +3,71 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   max-width: 1200px;
   margin: 50px auto;
+
+  h1 {
+    margin-bottom: 20px;
+  }
 `;
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
-
-  h1 {
-    display: flex;
-    align-self: flex-start;
-    margin-bottom: 30px;
-  }
+  justify-content: space-between;
 
   input {
     width: 237px;
-    height: 36px;
-    margin-bottom: 22px;
-  }
-`;
-/**
- *
- * /**
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid blue;
-  border: 1px solid green;
-  border-collapse: collapse;
-  width: 100%;
-  margin: 0 auto;
-  align-items: center;
-
-  th {
-    text-align: left;
-    padding-bottom: 10px;
-    border: 1px solid yellow;
+    height: 40px;
   }
 
-  tr {
-    border: 1px solid red;
-  }
-
-  td {
-    background: #fff;
-    justify-items: center;
-    margin-bottom: 12px;
-  }
-
-  td:first-child {
-    border-radius: 5px 0 0 5px;
-  }
-
-  td div {
+  button {
     display: flex;
     align-items: center;
+    padding: 20px 10px;
+    height: 36px;
+    font-weight: bold;
+    color: #fff;
+    background: #7d40e7;
+    border-radius: 4px;
+    border: none;
   }
+`;
 
-  td div img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 12px;
+export const Table = styled.div`
+  display: grid;
+`;
+
+export const THeader = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 2fr 2fr 1fr;
+  font-weight: bold;
+  color: #444;
+  padding: 20px;
+
+  div {
+    &:last-child {
+      text-align: end;
+    }
   }
+`;
 
-  /**
+export const TRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 2fr 2fr 1fr;
+  color: #666;
+  font-size: 16px;
+  background: #fff;
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 5px;
 
-
-  td {
+  div {
+    display: flex;
+    text-align: left;
     align-items: center;
-    background: #fff;
-    margin: 0 50px;
-    padding: 5px;
+
+    p {
+      margin-left: 5px;
+      align-items: center;
+    }
 
     img {
       width: 35px;
@@ -80,62 +75,29 @@ export const Container = styled.div`
       border-radius: 50%;
     }
 
-  }
-  td:first-child {
-    border-radius: 5px 0 0 5px;
-  }
+    button {
+      border: 0;
+      background: none;
+    }
 
-  td:last-child {
-    border-radius: 0 5px 5px 0;
+    &:last-child {
+      justify-content: end;
+    }
   }
-   */
-
-export const TableHeader = styled.div`
-  max-width: 1440px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  font-weight: bold;
-  margin-bottom: 14px;
 `;
 
-export const TableRow = styled.div`
-  max-width: 1440px;
-  display: flex;
-  justify-content: space-around;
-  background: #fff;
-  border-radius: 4px;
-  margin-bottom: 21px;
-  align-items: center;
-  padding: 20px;
+export const StatusTag = styled.div`
+  background: #dff0df;
+  color: #2ca42b;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 50px;
 
   div {
-  }
-`;
-
-export const DeliverymanCell = styled.div`
-  display: flex;
-  align-items: center;
-
-  img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-`;
-
-export const StatusCell = styled.div`
-  display: flex;
-  align-items: center;
-  background: #dff0df;
-  padding: 5px 8px;
-  border-radius: 50px;
-  font-weight: bold;
-  font-size: 14px;
-  color: #2ca42b;
-
-  img {
+    background: #2ca42b;
+    width: 10px;
+    height: 10px;
     margin-right: 5px;
+    border-radius: 50%;
   }
 `;
