@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Wrapper = styled.div`
   max-width: 1200px;
@@ -70,12 +71,6 @@ export const TRow = styled.div`
       align-items: center;
     }
 
-    img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-    }
-
     button {
       border: 0;
       background: none;
@@ -100,5 +95,19 @@ export const StatusTag = styled.div`
     height: 10px;
     margin-right: 5px;
     border-radius: 50%;
+  }
+`;
+
+export const Avatar = styled.div`
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: ${props => (props.color ? props.color : 'none')};
+  color: ${props => (props.color ? darken(0.4, `${props.color}`) : 'none')};
+
+  p {
+    width: 100%;
+    text-align: center;
+    margin-left: 0 !important;
   }
 `;
