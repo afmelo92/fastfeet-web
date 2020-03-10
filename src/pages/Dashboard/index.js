@@ -46,18 +46,28 @@ export default function Dashboard() {
         },
       });
 
-      const data = response.data.map(p => ({
-        ...p,
-        firstname: p.deliverer.name.split(' ')[0],
-        lastname: p.deliverer.name.split(' ')[1],
-        primary: colors[Math.floor(Math.random() * colors.length)],
-        initials: nameInitials(p.deliverer.name),
-      }));
+      /** DELIVERY STATUS CHECK */
+      const data = response.data.map(p => {
+        let status = 'PENDENTE';
 
-      console.tron.log(`PRODUCTS: ${data}`);
+        if (p.canceled_at != null) {
+          status = 'CANCELADA';
+        } else if (p.start_date != null && p.end_date == null) {
+          status = 'RETIRADA';
+        } else if (p.start_date != null && p.end_date != null) {
+          status = 'ENTREGUE';
+        }
+
+        return {
+          ...p,
+          primary: colors[Math.floor(Math.random() * colors.length)],
+          initials: nameInitials(p.deliverer.name),
+          status,
+        };
+      });
+
       setProducts(data);
     }
-    console.tron.log(`PRODUCTS: ${products}`);
 
     loadProducts();
   }, []);
@@ -92,13 +102,6 @@ export default function Dashboard() {
             <div>#{product.id}</div>
             <div>{product.recipient.name}</div>
             <div>
-              {/**
-               * <img
-                width="35"
-                src={`https://ui-avatars.com/api/?name=${product.firstname}+${product.lastname}&background=${product.primary}&color=${product.secondary}`}
-                alt=""
-              />
-               */}
               <Avatar color={`#${product.primary}`}>
                 <p>{product.initials}</p>
               </Avatar>
@@ -107,9 +110,9 @@ export default function Dashboard() {
             <div>{product.recipient.city}</div>
             <div>{product.recipient.state}</div>
             <div>
-              <StatusTag>
+              <StatusTag status={product.status}>
                 <div />
-                ENTREGUE
+                {product.status}
               </StatusTag>
             </div>
             <div>

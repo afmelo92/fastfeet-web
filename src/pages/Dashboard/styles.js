@@ -82,15 +82,41 @@ export const TRow = styled.div`
   }
 `;
 
+const handleBackgroundColorTag = status => {
+  switch (status) {
+    case 'ENTREGUE':
+      return '#DFF0DF';
+    case 'CANCELADA':
+      return '#FAB0B0';
+    case 'RETIRADA':
+      return '#BAD2FF';
+    default:
+      return '#F0F0DF';
+  }
+};
+
+const handleTextColorTag = status => {
+  switch (status) {
+    case 'ENTREGUE':
+      return '#2CA42B';
+    case 'CANCELADA':
+      return '#DE3B3B';
+    case 'RETIRADA':
+      return '#4D85EE';
+    default:
+      return '#C1BC35';
+  }
+};
+
 export const StatusTag = styled.div`
-  background: #dff0df;
-  color: #2ca42b;
+  background: ${({ status }) => handleBackgroundColorTag(status)};
+  color: ${({ status }) => handleTextColorTag(status)};
   font-weight: bold;
   padding: 5px 10px;
   border-radius: 50px;
 
   div {
-    background: #2ca42b;
+    background: ${({ status }) => handleTextColorTag(status)};
     width: 10px;
     height: 10px;
     margin-right: 5px;
