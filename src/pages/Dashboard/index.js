@@ -23,7 +23,6 @@ export default function Dashboard() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [prod, setProd] = useState('');
-  const [visible, setVisible] = useState(false);
 
   /**
    * RANDOM COLOR GENERATOR FOR NAME AVATAR
@@ -63,6 +62,7 @@ export default function Dashboard() {
           primary: colors[Math.floor(Math.random() * colors.length)],
           initials: nameInitials(p.deliverer.name),
           status,
+          visible: false,
         };
       });
 
@@ -72,8 +72,15 @@ export default function Dashboard() {
     loadProducts();
   }, []);
 
-  function handleToggleVisible() {
-    setVisible(!visible);
+  function handleToggleVisible(id) {
+    setProducts(
+      products.map(p => {
+        if (p.id === id) {
+          return { ...p, visible: !p.visible };
+        }
+        return p;
+      })
+    );
   }
 
   return (
@@ -116,9 +123,14 @@ export default function Dashboard() {
               </StatusTag>
             </div>
             <div>
-              <button onClick={handleToggleVisible} type="button">
-                <MdMoreHoriz size={30} color="#C6C6C6" />
-                <Options visible={visible} />
+              <button type="button">
+                <MdMoreHoriz
+                  id={product.id}
+                  onClick={() => handleToggleVisible(product.id)}
+                  size={30}
+                  color="#C6C6C6"
+                />
+                <Options visible={product.visible} />
               </button>
             </div>
           </TRow>

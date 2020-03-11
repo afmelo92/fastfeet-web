@@ -4,10 +4,10 @@ import { MdDeleteForever } from 'react-icons/md';
 
 import { Container, OptionList } from './styles';
 
-export default function Options({ visible }) {
+export default function Options() {
   return (
     <Container>
-      <OptionList visible={visible}>
+      <OptionList>
         <button type="button">
           <IoMdEye size={20} color="#8E5BE8" />
           <p>Visualizar</p>
