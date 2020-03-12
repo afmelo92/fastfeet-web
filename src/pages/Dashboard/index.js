@@ -87,7 +87,7 @@ export default function Dashboard() {
     <Wrapper>
       <h1>Gerenciando encomendas</h1>
       <Container>
-        <Select type="text" placeholder="Buscar por encomendas" />
+        <Select />
         <button type="button">
           <MdAdd size={30} color="#fff" />
           <p>CADASTRAR</p>
@@ -125,7 +125,6 @@ export default function Dashboard() {
             <div>
               <button type="button">
                 <MdMoreHoriz
-                  id={product.id}
                   onClick={() => handleToggleVisible(product.id)}
                   size={30}
                   color="#C6C6C6"

@@ -4,8 +4,6 @@ export const Container = styled.div`
   position: relative;
 `;
 
-const handleTextColorTag = () => {};
-
 export const OptionList = styled.div`
   position: absolute;
   width: 150px;

@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  border: 1px solid red;
 
   input {
     width: 237px;
