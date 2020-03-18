@@ -53,6 +53,9 @@ export default function Deliveryman() {
 
       /** DELIVERY STATUS CHECK */
       const data = response.data.map(d => {
+        if (d.id < 10) {
+          d.id = `0${d.id}`;
+        }
         return {
           ...d,
           primary: colors[Math.floor(Math.random() * colors.length)],
@@ -141,7 +144,7 @@ export default function Deliveryman() {
         </THeader>
         {deliverers.map(deliverer => (
           <TRow key={deliverer.id}>
-            <div>#0{deliverer.id}</div>
+            <div>#{deliverer.id}</div>
             <div>
               <Avatar color={`#${deliverer.primary}`}>
                 <p>{deliverer.initials}</p>
@@ -152,14 +155,12 @@ export default function Deliveryman() {
             </div>
             <div>{deliverer.email}</div>
             <div>
-              <button type="button">
-                <MdMoreHoriz
-                  onClick={() => handleToggleVisible(deliverer.id)}
-                  size={30}
-                  color="#C6C6C6"
-                />
-                <Options visible={deliverer.visible} />
-              </button>
+              <MdMoreHoriz
+                onClick={() => handleToggleVisible(deliverer.id)}
+                size={30}
+                color="#C6C6C6"
+              />
+              <Options visible={deliverer.visible} />
             </div>
           </TRow>
         ))}

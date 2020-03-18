@@ -3,6 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { MdMoreHoriz, MdAdd } from 'react-icons/md';
+import { IconContext } from 'react-icons';
 import ColorScheme from 'color-scheme';
 import nameInitials from 'name-initials';
 import AsyncSelect from 'react-select/async';
@@ -51,6 +52,10 @@ export default function Dashboard() {
 
       /** DELIVERY STATUS CHECK */
       const data = response.data.map(p => {
+        if (p.id < 10) {
+          p.id = `0${p.id}`;
+        }
+
         let status = 'PENDENTE';
 
         if (p.canceled_at != null) {
@@ -168,16 +173,16 @@ export default function Dashboard() {
                 {product.status}
               </StatusTag>
             </div>
-            <div>
-              <button type="button">
+            <IconContext.Provider value={{ className: 'icon' }}>
+              <div>
                 <MdMoreHoriz
                   onClick={() => handleToggleVisible(product.id)}
                   size={30}
                   color="#C6C6C6"
                 />
                 <Options visible={product.visible} />
-              </button>
-            </div>
+              </div>
+            </IconContext.Provider>
           </TRow>
         ))}
       </Table>

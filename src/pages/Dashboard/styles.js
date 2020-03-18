@@ -21,6 +21,10 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
 
+  .icon:hover {
+    cursor: pointer !important;
+  }
+
   input {
     width: 237px;
     height: 40px;
