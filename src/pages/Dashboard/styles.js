@@ -13,7 +13,6 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 1px solid red;
 
   input {
     width: 237px;
@@ -138,3 +137,21 @@ export const Avatar = styled.div`
     margin-left: 0 !important;
   }
 `;
+
+export const customStyles = {
+  control: styles => ({
+    ...styles,
+    width: 237,
+    height: 36,
+  }),
+  placeholder: base => ({
+    ...base,
+    color: '#999',
+    paddingBottom: 15,
+  }),
+  indicatorsContainer: styles => ({
+    ...styles,
+    marginBottom: 15,
+  }),
+  // none of react-select's styles are passed to <Control />
+};

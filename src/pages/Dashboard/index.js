@@ -1,13 +1,17 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { MdMoreHoriz, MdAdd } from 'react-icons/md';
+import { MdMoreHoriz, MdAdd, MdSearch } from 'react-icons/md';
 import ColorScheme from 'color-scheme';
 import nameInitials from 'name-initials';
+import { components } from 'react-select';
+import AsyncSelect from 'react-select/async';
 
+import animatedComponents from 'react-select/animated';
 import api from '~/services/api';
 
 import Options from '~/components/Options';
-import Select from '~/components/Select';
 
 import {
   Wrapper,
@@ -17,7 +21,26 @@ import {
   TRow,
   StatusTag,
   Avatar,
+  customStyles,
 } from './styles';
+
+// import AsyncSelect from '~/components/Select';
+
+const DropdownIndicator = props => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <MdSearch size={20} />
+    </components.DropdownIndicator>
+  );
+};
+
+const IndicatorsContainer = props => {
+  return (
+    <div>
+      <components.IndicatorsContainer {...props} />
+    </div>
+  );
+};
 
 export default function Dashboard() {
   const [products, setProducts] = useState([]);
@@ -70,7 +93,7 @@ export default function Dashboard() {
     }
 
     loadProducts();
-  }, []);
+  }, [prod]);
 
   function handleToggleVisible(id) {
     setProducts(
@@ -83,11 +106,58 @@ export default function Dashboard() {
     );
   }
 
+  const filterData = async inputValue => {
+    const response = await api.get('products', {
+      params: {
+        page,
+        prod,
+      },
+    });
+
+    const data = response.data.map(p => {
+      return {
+        value: p.product,
+        label: p.product,
+      };
+    });
+
+    return data.filter(i =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const promiseOptions = inputValue =>
+    new Promise(resolve => {
+      resolve(filterData(inputValue));
+    });
+
+  function handleSelection(value) {
+    if (value === null) {
+      return setProd('');
+    }
+    return setProd([value.value]);
+  }
+
   return (
     <Wrapper>
       <h1>Gerenciando encomendas</h1>
       <Container>
-        <Select />
+        <AsyncSelect
+          cacheOptions
+          defaultOptions
+          loadOptions={promiseOptions}
+          styles={customStyles}
+          placeholder="Buscar por encomendas"
+          isClearable
+          onChange={handleSelection}
+          components={{
+            animatedComponents,
+            DropdownIndicator,
+            IndicatorsContainer,
+            IndicatorSeparator: () => null,
+          }}
+        />
+
         <button type="button">
           <MdAdd size={30} color="#fff" />
           <p>CADASTRAR</p>
