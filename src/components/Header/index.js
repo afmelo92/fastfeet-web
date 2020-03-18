@@ -15,7 +15,7 @@ export default function Header() {
           <NavLink activeClassName="current" to="/dashboard">
             ENCOMENDAS
           </NavLink>
-          <NavLink to="/deliverers">ENTREGADORES</NavLink>
+          <NavLink to="/deliveryman">ENTREGADORES</NavLink>
           <NavLink to="/recipients">DESTINATÁRIOS</NavLink>
           <NavLink to="/delivery/problems">PROBLEMAS</NavLink>
         </nav>

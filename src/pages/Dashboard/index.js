@@ -20,8 +20,6 @@ import {
   StatusTag,
   Avatar,
   customStyles,
-  DropdownIndicator,
-  IndicatorsContainer,
   componentStyle,
 } from './styles';
 
