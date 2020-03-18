@@ -1,3 +1,10 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+import { components } from 'react-select';
+import animatedComponents from 'react-select/animated';
+
+import { MdSearch } from 'react-icons/md';
+
 import styled from 'styled-components';
 import { darken } from 'polished';
 
@@ -153,5 +160,29 @@ export const customStyles = {
     ...styles,
     marginBottom: 15,
   }),
+
   // none of react-select's styles are passed to <Control />
+};
+
+export const DropdownIndicator = props => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <MdSearch size={20} />
+    </components.DropdownIndicator>
+  );
+};
+
+export const IndicatorsContainer = props => {
+  return (
+    <div>
+      <components.IndicatorsContainer {...props} />
+    </div>
+  );
+};
+
+export const componentStyle = {
+  animatedComponents,
+  DropdownIndicator,
+  IndicatorsContainer,
+  IndicatorSeparator: () => null,
 };

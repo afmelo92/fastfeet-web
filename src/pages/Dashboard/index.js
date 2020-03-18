@@ -2,13 +2,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { MdMoreHoriz, MdAdd, MdSearch } from 'react-icons/md';
+import { MdMoreHoriz, MdAdd } from 'react-icons/md';
 import ColorScheme from 'color-scheme';
 import nameInitials from 'name-initials';
-import { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-import animatedComponents from 'react-select/animated';
 import api from '~/services/api';
 
 import Options from '~/components/Options';
@@ -22,25 +20,10 @@ import {
   StatusTag,
   Avatar,
   customStyles,
+  DropdownIndicator,
+  IndicatorsContainer,
+  componentStyle,
 } from './styles';
-
-// import AsyncSelect from '~/components/Select';
-
-const DropdownIndicator = props => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <MdSearch size={20} />
-    </components.DropdownIndicator>
-  );
-};
-
-const IndicatorsContainer = props => {
-  return (
-    <div>
-      <components.IndicatorsContainer {...props} />
-    </div>
-  );
-};
 
 export default function Dashboard() {
   const [products, setProducts] = useState([]);
@@ -150,12 +133,7 @@ export default function Dashboard() {
           placeholder="Buscar por encomendas"
           isClearable
           onChange={handleSelection}
-          components={{
-            animatedComponents,
-            DropdownIndicator,
-            IndicatorsContainer,
-            IndicatorSeparator: () => null,
-          }}
+          components={componentStyle}
         />
 
         <button type="button">
