@@ -4,7 +4,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { MdMoreHoriz, MdAdd } from 'react-icons/md';
-import ColorScheme from 'color-scheme';
 import AsyncSelect from 'react-select/async';
 
 import api from '~/services/api';
@@ -25,16 +24,6 @@ export default function Recipients() {
   const [recipients, setRecipients] = useState([]);
   const [page, setPage] = useState(1);
   const [rec, setRec] = useState('');
-
-  /**
-   * RANDOM COLOR GENERATOR FOR NAME AVATAR
-   */
-  const scheme = new ColorScheme();
-  scheme
-    .from_hue(21)
-    .scheme('tetrade')
-    .distance(0.8)
-    .variation('light');
 
   useEffect(() => {
     async function loadProducts() {

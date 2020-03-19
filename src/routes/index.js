@@ -15,11 +15,11 @@ export default function Routes() {
       <Route path="/" exact component={SignIn} />
 
       <Route path="/dashboard" exact component={Dashboard} isPrivate />
-      <Route path="/problems" exact component={Problems} isPrivate />
+      <Route path="/delivery/problems" exact component={Problems} isPrivate />
       <Route path="/recipients" exact component={Recipients} isPrivate />
       <Route path="/deliveryman" exact component={Deliveryman} isPrivate />
 
-      <Route path="/" component={Default} />
+      <Route path="/*" component={Default} />
     </Switch>
   );
 }
