@@ -2,9 +2,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
+
 import { MdMoreHoriz, MdAdd } from 'react-icons/md';
 import ColorScheme from 'color-scheme';
-import nameInitials from 'name-initials';
 import AsyncSelect from 'react-select/async';
 
 import api from '~/services/api';
@@ -17,16 +17,14 @@ import {
   Table,
   THeader,
   TRow,
-  StatusTag,
-  Avatar,
   customStyles,
   componentStyle,
 } from './styles';
 
-export default function Dashboard() {
-  const [products, setProducts] = useState([]);
+export default function Recipients() {
+  const [recipients, setRecipients] = useState([]);
   const [page, setPage] = useState(1);
-  const [prod, setProd] = useState('');
+  const [rec, setRec] = useState('');
 
   /**
    * RANDOM COLOR GENERATOR FOR NAME AVATAR
@@ -38,71 +36,55 @@ export default function Dashboard() {
     .distance(0.8)
     .variation('light');
 
-  const colors = scheme.colors();
-
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get('products', {
+      const response = await api.get('recipients', {
         params: {
           page,
-          prod,
+          rec,
         },
       });
 
       /** DELIVERY STATUS CHECK */
-      const data = response.data.map(p => {
-        if (p.id < 10) {
-          p.id = `0${p.id}`;
+      const data = response.data.map(r => {
+        if (r.id < 10) {
+          r.id = `0${r.id}`;
         }
-
-        let status = 'PENDENTE';
-
-        if (p.canceled_at != null) {
-          status = 'CANCELADA';
-        } else if (p.start_date != null && p.end_date == null) {
-          status = 'RETIRADA';
-        } else if (p.start_date != null && p.end_date != null) {
-          status = 'ENTREGUE';
-        }
-
         return {
-          ...p,
-          primary: colors[Math.floor(Math.random() * colors.length)],
-          initials: nameInitials(p.deliverer.name),
-          status,
+          ...r,
           visible: false,
         };
       });
 
-      setProducts(data);
+      setRecipients(data);
     }
 
     loadProducts();
-  }, [prod]);
+  }, [rec, page]);
 
   function handleToggleVisible(id) {
-    setProducts(
-      products.map(p => {
-        if (p.id === id) {
-          return { ...p, visible: !p.visible };
+    setRecipients(
+      recipients.map(r => {
+        if (r.id === id) {
+          return { ...r, visible: !r.visible };
         }
-        return p;
+        return r;
       })
     );
   }
 
   const filterData = async inputValue => {
-    const response = await api.get('products', {
+    const response = await api.get('recipients', {
       params: {
         page,
-        prod,
+        rec,
       },
     });
 
-    const data = response.data.map(p => {
+    const data = response.data.map(r => {
       return {
-        value: p.product,
-        label: p.product,
+        value: r.name,
+        label: r.name,
       };
     });
 
@@ -118,21 +100,21 @@ export default function Dashboard() {
 
   function handleSelection(value) {
     if (value === null) {
-      return setProd('');
+      return setRec('');
     }
-    return setProd([value.value]);
+    return setRec([value.value]);
   }
 
   return (
     <Wrapper>
-      <h1>Gerenciando encomendas</h1>
+      <h1>Gerenciando destinatários</h1>
       <Container>
         <AsyncSelect
           cacheOptions
           defaultOptions
           loadOptions={promiseOptions}
           styles={customStyles}
-          placeholder="Buscar por encomendas"
+          placeholder="Buscar por destinatários"
           isClearable
           onChange={handleSelection}
           components={componentStyle}
@@ -147,38 +129,24 @@ export default function Dashboard() {
       <Table>
         <THeader>
           <div>ID</div>
-          <div>Destinatário</div>
-          <div>Entregador</div>
-          <div>Cidade</div>
-          <div>Estado</div>
-          <div>Status</div>
+          <div>Nome</div>
+          <div>Endereço</div>
           <div>Ações</div>
         </THeader>
-        {products.map(product => (
-          <TRow key={product.id}>
-            <div>#{product.id}</div>
-            <div>{product.recipient.name}</div>
+        {recipients.map(recipient => (
+          <TRow key={recipient.id}>
+            <div>#{recipient.id}</div>
             <div>
-              <Avatar color={`#${product.primary}`}>
-                <p>{product.initials}</p>
-              </Avatar>
-              <p>{product.deliverer.name}</p>
+              <p>{recipient.name}</p>
             </div>
-            <div>{product.recipient.city}</div>
-            <div>{product.recipient.state}</div>
-            <div>
-              <StatusTag status={product.status}>
-                <div />
-                {product.status}
-              </StatusTag>
-            </div>
+            <div>{`${recipient.street} ${recipient.number} - ${recipient.complement} - ${recipient.city}`}</div>
             <div>
               <MdMoreHoriz
-                onClick={() => handleToggleVisible(product.id)}
+                onClick={() => handleToggleVisible(recipient.id)}
                 size={30}
                 color="#C6C6C6"
               />
-              <Options visible={product.visible} />
+              <Options visible={recipient.visible} />
             </div>
           </TRow>
         ))}

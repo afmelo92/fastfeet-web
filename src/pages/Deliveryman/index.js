@@ -17,7 +17,6 @@ import {
   Table,
   THeader,
   TRow,
-  StatusTag,
   Avatar,
   customStyles,
   componentStyle,
