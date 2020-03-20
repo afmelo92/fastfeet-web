@@ -24,7 +24,7 @@ import {
   RegLink,
 } from './styles';
 
-export default function Dashboard() {
+export default function EditProduct() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [prod, setProd] = useState('');
@@ -126,7 +126,7 @@ export default function Dashboard() {
 
   return (
     <Wrapper>
-      <h1>Gerenciando encomendas</h1>
+      <h1>Editando encomendas</h1>
       <Container>
         <AsyncSelect
           cacheOptions
@@ -141,7 +141,7 @@ export default function Dashboard() {
 
         <button type="button">
           <MdAdd size={30} color="#fff" />
-          <RegLink to="/product/register">CADASTRAR</RegLink>
+          <RegLink to="product/edit">CADASTRAR</RegLink>
         </button>
       </Container>
 

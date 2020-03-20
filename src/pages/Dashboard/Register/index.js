@@ -2,10 +2,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { MdMoreHoriz, MdAdd } from 'react-icons/md';
+import { MdChevronLeft, MdDone } from 'react-icons/md';
 import ColorScheme from 'color-scheme';
 import nameInitials from 'name-initials';
 import AsyncSelect from 'react-select/async';
+import { Link } from 'react-router-dom';
 
 import api from '~/services/api';
 
@@ -15,16 +16,14 @@ import {
   Wrapper,
   Container,
   Table,
-  THeader,
-  TRow,
-  StatusTag,
-  Avatar,
+  FirstHeader,
+  SecondHeader,
   customStyles,
   componentStyle,
-  RegLink,
+  componentStyleProduct,
 } from './styles';
 
-export default function Dashboard() {
+export default function EditProduct() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [prod, setProd] = useState('');
@@ -81,17 +80,6 @@ export default function Dashboard() {
     loadProducts();
   }, [prod]);
 
-  function handleToggleVisible(id) {
-    setProducts(
-      products.map(p => {
-        if (p.id === id) {
-          return { ...p, visible: !p.visible };
-        }
-        return p;
-      })
-    );
-  }
-
   const filterData = async inputValue => {
     const response = await api.get('products', {
       params: {
@@ -126,63 +114,67 @@ export default function Dashboard() {
 
   return (
     <Wrapper>
-      <h1>Gerenciando encomendas</h1>
       <Container>
-        <AsyncSelect
-          cacheOptions
-          defaultOptions
-          loadOptions={promiseOptions}
-          styles={customStyles}
-          placeholder="Buscar por encomendas"
-          isClearable
-          onChange={handleSelection}
-          components={componentStyle}
-        />
-
-        <button type="button">
-          <MdAdd size={30} color="#fff" />
-          <RegLink to="/product/register">CADASTRAR</RegLink>
-        </button>
+        <h1>Cadastro de encomendas</h1>
+        <div>
+          <Link to="/dashboard">
+            <button type="button">
+              <MdChevronLeft size={30} color="#fff" />
+              VOLTAR
+            </button>
+          </Link>
+          <button type="button">
+            <MdDone size={30} color="#fff" />
+            SALVAR
+          </button>
+        </div>
       </Container>
 
       <Table>
-        <THeader>
-          <div>ID</div>
-          <div>Destinatário</div>
-          <div>Entregador</div>
-          <div>Cidade</div>
-          <div>Estado</div>
-          <div>Status</div>
-          <div>Ações</div>
-        </THeader>
-        {products.map(product => (
-          <TRow key={product.id}>
-            <div>#{product.id}</div>
-            <div>{product.recipient.name}</div>
-            <div>
-              <Avatar color={`#${product.primary}`}>
-                <p>{product.initials}</p>
-              </Avatar>
-              <p>{product.deliverer.name}</p>
-            </div>
-            <div>{product.recipient.city}</div>
-            <div>{product.recipient.state}</div>
-            <div>
-              <StatusTag status={product.status}>
-                <div />
-                {product.status}
-              </StatusTag>
-            </div>
-            <div>
-              <MdMoreHoriz
-                onClick={() => handleToggleVisible(product.id)}
-                size={30}
-                color="#C6C6C6"
-              />
-              <Options visible={product.visible} />
-            </div>
-          </TRow>
-        ))}
+        <FirstHeader>
+          <div>
+            Destinatário
+            <AsyncSelect
+              cacheOptions
+              defaultOptions
+              loadOptions={promiseOptions}
+              styles={customStyles}
+              placeholder="Insira Destinatário"
+              isClearable
+              onChange={handleSelection}
+              components={componentStyle}
+            />
+          </div>
+
+          <div>
+            Entregador
+            <AsyncSelect
+              cacheOptions
+              defaultOptions
+              loadOptions={promiseOptions}
+              styles={customStyles}
+              placeholder="Insira Entregador"
+              isClearable
+              onChange={handleSelection}
+              components={componentStyle}
+            />
+          </div>
+        </FirstHeader>
+        <SecondHeader>
+          <div>
+            Nome do produto
+            <AsyncSelect
+              cacheOptions
+              defaultOptions
+              loadOptions={promiseOptions}
+              styles={customStyles}
+              placeholder="Insira produto"
+              isClearable
+              onChange={handleSelection}
+              components={componentStyleProduct}
+            />
+          </div>
+        </SecondHeader>
       </Table>
     </Wrapper>
   );
