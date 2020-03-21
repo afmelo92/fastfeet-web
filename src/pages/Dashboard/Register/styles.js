@@ -64,23 +64,34 @@ export const FirstHeader = styled.div`
 `;
 
 export const SecondHeader = styled.div`
-  display: grid;
-  grid-template-columns: 12fr;
+  display: flex;
+  flex-direction: column;
   font-weight: bold;
   color: #444;
   padding: 20px;
+
+  input {
+    height: 45px;
+    margin-top: 10px;
+    padding-left: 10px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+  }
 `;
 
 export const customStyles = {
   control: styles => ({
     ...styles,
     width: '100%',
-    height: 36,
+    height: 45,
+    marginTop: 10,
   }),
   placeholder: base => ({
     ...base,
     color: '#999',
-    paddingBottom: 15,
+    paddingBottom: 10,
+    fontWeight: 'normal',
   }),
   indicatorsContainer: styles => ({
     ...styles,

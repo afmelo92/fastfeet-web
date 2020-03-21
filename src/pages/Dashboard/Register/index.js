@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MdChevronLeft, MdDone } from 'react-icons/md';
-import ColorScheme from 'color-scheme';
-import nameInitials from 'name-initials';
-import AsyncSelect from 'react-select/async';
+// import AsyncSelect from 'react-select/async';
 import { Link } from 'react-router-dom';
+import { Form } from '@unform/web';
+
+import Input from '~/components/Input';
+import AsyncSelect from '~/components/AsyncSelect';
 
 import api from '~/services/api';
-
-import Options from '~/components/Options';
 
 import {
   Wrapper,
@@ -23,75 +23,24 @@ import {
   componentStyleProduct,
 } from './styles';
 
-export default function EditProduct() {
-  const [products, setProducts] = useState([]);
+export default function RegisterProduct() {
   const [page, setPage] = useState(1);
   const [prod, setProd] = useState('');
+  const [rec, setRec] = useState('');
+  const [dname, setDname] = useState('');
 
-  /**
-   * RANDOM COLOR GENERATOR FOR NAME AVATAR
-   */
-  const scheme = new ColorScheme();
-  scheme
-    .from_hue(21)
-    .scheme('tetrade')
-    .distance(0.8)
-    .variation('light');
-
-  const colors = scheme.colors();
-
-  useEffect(() => {
-    async function loadProducts() {
-      const response = await api.get('products', {
-        params: {
-          page,
-          prod,
-        },
-      });
-
-      /** DELIVERY STATUS CHECK */
-      const data = response.data.map(p => {
-        if (p.id < 10) {
-          p.id = `0${p.id}`;
-        }
-
-        let status = 'PENDENTE';
-
-        if (p.canceled_at != null) {
-          status = 'CANCELADA';
-        } else if (p.start_date != null && p.end_date == null) {
-          status = 'RETIRADA';
-        } else if (p.start_date != null && p.end_date != null) {
-          status = 'ENTREGUE';
-        }
-
-        return {
-          ...p,
-          primary: colors[Math.floor(Math.random() * colors.length)],
-          initials: nameInitials(p.deliverer.name),
-          status,
-          visible: false,
-        };
-      });
-
-      setProducts(data);
-    }
-
-    loadProducts();
-  }, [prod]);
-
-  const filterData = async inputValue => {
-    const response = await api.get('products', {
+  const filterRecData = async inputValue => {
+    const response = await api.get('recipients', {
       params: {
         page,
-        prod,
+        rec,
       },
     });
 
-    const data = response.data.map(p => {
+    const data = response.data.map(d => {
       return {
-        value: p.product,
-        label: p.product,
+        value: d.name,
+        label: d.name,
       };
     });
 
@@ -100,82 +49,111 @@ export default function EditProduct() {
     );
   };
 
-  const promiseOptions = inputValue =>
+  const promiseRecOptions = inputValue =>
     new Promise(resolve => {
-      resolve(filterData(inputValue));
+      resolve(filterRecData(inputValue));
     });
 
-  function handleSelection(value) {
+  const filterDelData = async inputValue => {
+    const response = await api.get('deliverers', {
+      params: {
+        page,
+        dname,
+      },
+    });
+
+    const data = response.data.map(d => {
+      return {
+        value: d.name,
+        label: d.name,
+      };
+    });
+
+    return data.filter(i =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const promiseDelOptions = inputValue =>
+    new Promise(resolve => {
+      resolve(filterDelData(inputValue));
+    });
+
+  function handleRecipientSelection(value) {
     if (value === null) {
-      return setProd('');
+      return setRec('');
     }
-    return setProd([value.value]);
+    return setRec([value.value]);
+  }
+
+  function handleDeliverymanSelection(value) {
+    if (value === null) {
+      return setDname('');
+    }
+    return setDname([value.value]);
+  }
+
+  function handleSubmit(data) {
+    console.tron.log(`DATA: ${JSON.stringify(data)}`);
   }
 
   return (
     <Wrapper>
-      <Container>
-        <h1>Cadastro de encomendas</h1>
-        <div>
-          <Link to="/dashboard">
-            <button type="button">
-              <MdChevronLeft size={30} color="#fff" />
-              VOLTAR
+      <Form onSubmit={handleSubmit}>
+        <Container>
+          <h1>Cadastro de encomendas</h1>
+          <div>
+            <Link to="/dashboard">
+              <button type="button">
+                <MdChevronLeft size={30} color="#fff" />
+                VOLTAR
+              </button>
+            </Link>
+            <button type="submit">
+              <MdDone size={30} color="#fff" />
+              SALVAR
             </button>
-          </Link>
-          <button type="button">
-            <MdDone size={30} color="#fff" />
-            SALVAR
-          </button>
-        </div>
-      </Container>
-
-      <Table>
-        <FirstHeader>
-          <div>
-            Destinatário
-            <AsyncSelect
-              cacheOptions
-              defaultOptions
-              loadOptions={promiseOptions}
-              styles={customStyles}
-              placeholder="Insira Destinatário"
-              isClearable
-              onChange={handleSelection}
-              components={componentStyle}
-            />
           </div>
+        </Container>
 
-          <div>
-            Entregador
-            <AsyncSelect
-              cacheOptions
-              defaultOptions
-              loadOptions={promiseOptions}
-              styles={customStyles}
-              placeholder="Insira Entregador"
-              isClearable
-              onChange={handleSelection}
-              components={componentStyle}
-            />
-          </div>
-        </FirstHeader>
-        <SecondHeader>
-          <div>
+        <Table>
+          <FirstHeader>
+            <div>
+              Destinatário
+              <AsyncSelect
+                name="recipient"
+                cacheOptions
+                defaultOptions
+                loadOptions={promiseRecOptions}
+                styles={customStyles}
+                placeholder="Insira Destinatário"
+                isClearable
+                onChange={handleRecipientSelection}
+                components={componentStyle}
+              />
+            </div>
+
+            <div>
+              Entregador
+              <AsyncSelect
+                name="deliveryman"
+                cacheOptions
+                defaultOptions
+                loadOptions={promiseDelOptions}
+                styles={customStyles}
+                placeholder="Insira Entregador"
+                isClearable
+                onChange={handleDeliverymanSelection}
+                components={componentStyle}
+              />
+            </div>
+          </FirstHeader>
+          <SecondHeader>
             Nome do produto
-            <AsyncSelect
-              cacheOptions
-              defaultOptions
-              loadOptions={promiseOptions}
-              styles={customStyles}
-              placeholder="Insira produto"
-              isClearable
-              onChange={handleSelection}
-              components={componentStyleProduct}
-            />
-          </div>
-        </SecondHeader>
-      </Table>
+            <Input name="product" />
+          </SecondHeader>
+        </Table>
+      </Form>
     </Wrapper>
   );
 }
