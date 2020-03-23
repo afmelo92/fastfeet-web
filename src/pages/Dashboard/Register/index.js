@@ -2,13 +2,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { MdChevronLeft, MdDone } from 'react-icons/md';
-// import AsyncSelect from 'react-select/async';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 
 import Input from '~/components/Input';
 import AsyncSelect from '~/components/AsyncSelect';
+
+import { registerProductRequest } from '~/store/modules/product/actions';
 
 import api from '~/services/api';
 
@@ -20,7 +22,6 @@ import {
   SecondHeader,
   customStyles,
   componentStyle,
-  componentStyleProduct,
 } from './styles';
 
 export default function RegisterProduct() {
@@ -28,6 +29,7 @@ export default function RegisterProduct() {
   const [prod, setProd] = useState('');
   const [rec, setRec] = useState('');
   const [dname, setDname] = useState('');
+  const dispatch = useDispatch();
 
   const filterRecData = async inputValue => {
     const response = await api.get('recipients', {
@@ -37,10 +39,10 @@ export default function RegisterProduct() {
       },
     });
 
-    const data = response.data.map(d => {
+    const data = response.data.map(r => {
       return {
-        value: d.name,
-        label: d.name,
+        value: { name: r.name, id: r.id },
+        label: r.name,
       };
     });
 
@@ -64,7 +66,7 @@ export default function RegisterProduct() {
 
     const data = response.data.map(d => {
       return {
-        value: d.name,
+        value: { name: d.name, id: d.id },
         label: d.name,
       };
     });
@@ -93,8 +95,8 @@ export default function RegisterProduct() {
     return setDname([value.value]);
   }
 
-  function handleSubmit(data) {
-    console.tron.log(`DATA: ${JSON.stringify(data)}`);
+  async function handleSubmit({ recipient, deliveryman, product }) {
+    dispatch(registerProductRequest(recipient, deliveryman, product));
   }
 
   return (
@@ -150,7 +152,7 @@ export default function RegisterProduct() {
           </FirstHeader>
           <SecondHeader>
             Nome do produto
-            <Input name="product" />
+            <Input name="product" placeholder="Insira Produto" />
           </SecondHeader>
         </Table>
       </Form>
