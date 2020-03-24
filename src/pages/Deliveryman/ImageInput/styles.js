@@ -6,17 +6,37 @@ export const Container = styled.div`
 
   label {
     cursor: pointer;
-
     &:hover {
       opacity: 0.7;
     }
 
-    img {
-      height: 120px;
-      width: 120px;
+    div {
+      width: 150px;
+      height: 150px;
+      border: 4px dashed #ddd;
       border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.3);
+      margin-top: 20px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        text-align: center;
+        width: 150px;
+        color: #ddd;
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+
+    img {
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
       background: #eee;
+      margin-top: 20px;
     }
 
     input {

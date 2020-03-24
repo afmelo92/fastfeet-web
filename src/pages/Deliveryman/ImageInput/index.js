@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { useField } from '@unform/core';
+import { MdImage } from 'react-icons/md';
 
 import { Container } from './styles';
 
@@ -36,7 +37,14 @@ const ImageInput = ({ name, ...rest }) => {
   return (
     <Container>
       <label htmlFor="avatar">
-        {preview || <img src={preview} alt="Preview" width="100" />}
+        {preview ? (
+          <img src={preview} alt="" />
+        ) : (
+          <div>
+            <MdImage size={40} color="#DDDDDD" />
+            <p>Adicionar foto</p>
+          </div>
+        )}
         <input
           type="file"
           ref={inputRef}
