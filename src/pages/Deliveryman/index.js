@@ -20,6 +20,7 @@ import {
   Avatar,
   customStyles,
   componentStyle,
+  RegLink,
 } from './styles';
 
 // import { Container } from './styles';
@@ -129,7 +130,7 @@ export default function Deliveryman() {
 
         <button type="button">
           <MdAdd size={30} color="#fff" />
-          <p>CADASTRAR</p>
+          <RegLink to="/deliveryman/register">CADASTRAR</RegLink>
         </button>
       </Container>
 

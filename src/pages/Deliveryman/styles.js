@@ -2,6 +2,7 @@
 import React from 'react';
 import { components } from 'react-select';
 import animatedComponents from 'react-select/animated';
+import { Link } from 'react-router-dom';
 
 import { MdSearch } from 'react-icons/md';
 
@@ -56,6 +57,10 @@ export const THeader = styled.div`
       text-align: end;
     }
   }
+`;
+
+export const RegLink = styled(Link)`
+  color: #fff;
 `;
 
 export const TRow = styled.div`
