@@ -95,7 +95,7 @@ export default function Dashboard() {
   const filterData = async inputValue => {
     const response = await api.get('products', {
       params: {
-        page,
+        page: 'all',
         prod,
       },
     });

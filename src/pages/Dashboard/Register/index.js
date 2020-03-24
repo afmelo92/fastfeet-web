@@ -25,8 +25,7 @@ import {
 } from './styles';
 
 export default function RegisterProduct() {
-  const [page, setPage] = useState(1);
-  const [prod, setProd] = useState('');
+  const [page, setPage] = useState('all');
   const [rec, setRec] = useState('');
   const [dname, setDname] = useState('');
   const dispatch = useDispatch();

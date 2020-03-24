@@ -9,7 +9,6 @@ import { registerProductSuccess, registerFailure } from './actions';
 export function* registerProduct({ payload }) {
   try {
     const { recipient, deliveryman, product } = payload;
-    console.tron.log('CHEGOU NAS ACTIONS');
     yield call(api.post, 'products', {
       deliverer_id: deliveryman.id,
       recipient_id: recipient.id,
