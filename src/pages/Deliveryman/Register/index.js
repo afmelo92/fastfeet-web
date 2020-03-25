@@ -17,10 +17,8 @@ import { Wrapper, Container, Table, SecondHeader } from './styles';
 export default function RegisterDeliveryman() {
   const dispatch = useDispatch();
 
-  async function handleSubmit({ name, email, avatar }) {
-    console.tron.log(`NAME: ${name}`);
-    console.tron.log(`EMAIL: ${email}`);
-    // dispatch(registerDeliverymanRequest(name, email));
+  async function handleSubmit({ name, email, avatar_id }) {
+    dispatch(registerDeliverymanRequest(name, email, avatar_id));
   }
 
   return (
@@ -43,7 +41,7 @@ export default function RegisterDeliveryman() {
         </Container>
 
         <Table>
-          <ImageInput name="avatar" />
+          <ImageInput name="avatar_id" />
           <SecondHeader>
             <div>
               <h3>Nome</h3>

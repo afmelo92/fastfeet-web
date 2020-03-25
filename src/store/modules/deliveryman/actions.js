@@ -1,14 +1,14 @@
-export function registerDeliverymanRequest(name, email) {
+export function registerDeliverymanRequest(name, email, avatar_id) {
   return {
-    type: '@name/REGISTER_DELIVERYMAN_REQUEST',
-    payload: { name, email },
+    type: '@deliveryman/REGISTER_DELIVERYMAN_REQUEST',
+    payload: { name, email, avatar_id },
   };
 }
 
-export function registerDeliverymanSuccess(name, email) {
+export function registerDeliverymanSuccess(name, email, avatar_id) {
   return {
-    type: '@name/REGISTER_DELIVERYMAN_REQUEST',
-    payload: { name, email },
+    type: '@deliveryman/REGISTER_DELIVERYMAN_SUCCESS',
+    payload: { name, email, avatar_id },
   };
 }
 
