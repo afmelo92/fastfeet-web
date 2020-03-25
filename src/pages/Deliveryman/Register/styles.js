@@ -23,7 +23,7 @@ export const Container = styled.div`
     display: flex;
 
     button:first-child {
-      margin-right: 5px;
+      margin-right: 16px;
       background: #ccc;
     }
   }

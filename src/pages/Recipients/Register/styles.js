@@ -2,18 +2,16 @@
 import React from 'react';
 import { components } from 'react-select';
 import animatedComponents from 'react-select/animated';
-import { Link } from 'react-router-dom';
-
-import { MdSearch } from 'react-icons/md';
+import { MdExpandMore } from 'react-icons/md';
 
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  max-width: 1200px;
+  max-width: 900px;
   margin: 50px auto;
 
   h1 {
-    margin-bottom: 20px;
+    margin-bottom: 27px;
   }
 `;
 
@@ -21,18 +19,24 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
 
-  input {
-    width: 237px;
-    height: 40px;
+  div {
+    display: flex;
+
+    button:first-child {
+      margin-right: 16px;
+      background: #ccc;
+    }
   }
 
   button {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 20px 10px;
-    width: 142px;
+    width: 112px;
     height: 36px;
     font-weight: bold;
+    font-size: 14px;
     color: #fff;
     background: #7d40e7;
     border-radius: 4px;
@@ -41,68 +45,69 @@ export const Container = styled.div`
 `;
 
 export const Table = styled.div`
-  display: grid;
-`;
+  background: #fff;
+  border-radius: 4px;
+  padding: 30px;
 
-export const THeader = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 4fr 6fr 2fr;
-  font-weight: bold;
-  color: #444;
-  padding: 20px;
-
-  div {
-    &:last-child {
-      text-align: end;
-    }
+  input {
+    height: 45px;
+    margin-top: 10px;
+    padding-left: 10px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
   }
 `;
 
-export const RegLink = styled(Link)`
-  color: #fff;
-`;
-
-export const TRow = styled.div`
+export const FirstRow = styled.div`
   display: grid;
-  grid-template-columns: 2fr 4fr 6fr 2fr;
-  color: #666;
-  font-size: 16px;
-  background: #fff;
-  margin-bottom: 15px;
-  padding: 20px;
-  border-radius: 5px;
+  grid-template-columns: 12fr;
+`;
+export const SecondRow = styled.div`
+  display: grid;
+  grid-template-columns: 8fr 2fr 2fr;
 
   div {
-    display: flex;
-    text-align: left;
-    align-items: center;
-
-    p {
-      margin-left: 5px;
-      align-items: center;
-    }
-
-    button {
-      border: 0;
-      background: none;
-    }
-
+    margin-top: 10px;
+    margin-right: 10px;
     &:last-child {
-      justify-content: end;
+      margin-right: 0;
     }
+  }
+
+  input {
+    width: 100%;
+  }
+`;
+export const ThirdRow = styled.div`
+  display: grid;
+  grid-template-columns: 4fr 4fr 4fr;
+
+  div {
+    margin-top: 10px;
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  input {
+    width: 100%;
   }
 `;
 
 export const customStyles = {
   control: styles => ({
     ...styles,
-    width: 237,
-    height: 36,
+    width: '100%',
+    height: 45,
+    marginTop: 10,
   }),
   placeholder: base => ({
     ...base,
     color: '#999',
-    paddingBottom: 15,
+    paddingBottom: 10,
+    fontWeight: 'normal',
   }),
   indicatorsContainer: styles => ({
     ...styles,
@@ -115,7 +120,7 @@ export const customStyles = {
 export const DropdownIndicator = props => {
   return (
     <components.DropdownIndicator {...props}>
-      <MdSearch size={20} />
+      <MdExpandMore size={20} />
     </components.DropdownIndicator>
   );
 };
@@ -132,5 +137,12 @@ export const componentStyle = {
   animatedComponents,
   DropdownIndicator,
   IndicatorsContainer,
+  IndicatorSeparator: () => null,
+};
+
+export const componentStyleProduct = {
+  animatedComponents,
+  DropdownIndicator,
+  IndicatorsContainer: () => null,
   IndicatorSeparator: () => null,
 };

@@ -18,6 +18,7 @@ import {
   TRow,
   customStyles,
   componentStyle,
+  RegLink,
 } from './styles';
 
 export default function Recipients() {
@@ -111,7 +112,7 @@ export default function Recipients() {
 
         <button type="button">
           <MdAdd size={30} color="#fff" />
-          <p>CADASTRAR</p>
+          <RegLink to="/recipients/register">CADASTRAR</RegLink>
         </button>
       </Container>
 
