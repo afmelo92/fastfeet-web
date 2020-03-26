@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   position: relative;
@@ -43,3 +44,22 @@ export const OptionList = styled.div`
     }
   }
 `;
+
+export const VisualizeButton = styled(Link)`
+  width: 100%;
+  display: flex;
+  padding: 3px 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(153, 153, 153, 0.3) !important;
+  text-decoration: none;
+  color: '#999';
+`;
+
+/**
+ *
+ * &:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border: none !important;
+    }
+ */

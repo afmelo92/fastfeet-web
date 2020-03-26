@@ -179,7 +179,7 @@ export default function Dashboard() {
                 size={30}
                 color="#C6C6C6"
               />
-              <Options visible={product.visible} />
+              <Options visible={product.visible} id={product.id} />
             </div>
           </TRow>
         ))}

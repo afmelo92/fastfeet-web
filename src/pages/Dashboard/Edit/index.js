@@ -2,108 +2,71 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { MdMoreHoriz, MdAdd } from 'react-icons/md';
-import ColorScheme from 'color-scheme';
-import nameInitials from 'name-initials';
-import AsyncSelect from 'react-select/async';
+import { useDispatch } from 'react-redux';
+import { MdChevronLeft, MdDone } from 'react-icons/md';
+import { Link, useParams } from 'react-router-dom';
+import { Form } from '@unform/web';
+
+import Input from '~/components/Input';
+import AsyncSelect from '~/components/AsyncSelect';
+
+import { registerProductRequest } from '~/store/modules/product/actions';
 
 import api from '~/services/api';
-
-import Options from '~/components/Options';
 
 import {
   Wrapper,
   Container,
   Table,
-  THeader,
-  TRow,
-  StatusTag,
-  Avatar,
+  FirstHeader,
+  SecondHeader,
   customStyles,
   componentStyle,
-  RegLink,
 } from './styles';
 
 export default function EditProduct() {
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [prod, setProd] = useState('');
+  const [page, setPage] = useState('all');
+  const [rec, setRec] = useState('');
+  const [dname, setDname] = useState('');
+  const [defValue, setDefValue] = useState([]);
+  const dispatch = useDispatch();
+  const { id } = useParams();
 
-  /**
-   * RANDOM COLOR GENERATOR FOR NAME AVATAR
-   */
-  const scheme = new ColorScheme();
-  scheme
-    .from_hue(21)
-    .scheme('tetrade')
-    .distance(0.8)
-    .variation('light');
-
-  const colors = scheme.colors();
+  console.tron.log(`ID: ${JSON.stringify(+id)}`);
 
   useEffect(() => {
-    async function loadProducts() {
-      const response = await api.get('products', {
+    async function loadDefault() {
+      const response = await api.get('/products', {
         params: {
           page,
-          prod,
+          prod: '',
         },
       });
-
-      /** DELIVERY STATUS CHECK */
-      const data = response.data.map(p => {
-        if (p.id < 10) {
-          p.id = `0${p.id}`;
+      // const result = objArray.map(({ foo }) => foo);
+      const defaultValue = response.data.filter(p => {
+        if (p.id === +id) {
+          return p.product;
         }
-
-        let status = 'PENDENTE';
-
-        if (p.canceled_at != null) {
-          status = 'CANCELADA';
-        } else if (p.start_date != null && p.end_date == null) {
-          status = 'RETIRADA';
-        } else if (p.start_date != null && p.end_date != null) {
-          status = 'ENTREGUE';
-        }
-
-        return {
-          ...p,
-          primary: colors[Math.floor(Math.random() * colors.length)],
-          initials: nameInitials(p.deliverer.name),
-          status,
-          visible: false,
-        };
       });
 
-      setProducts(data);
+      setDefValue(defaultValue[0].product);
     }
 
-    loadProducts();
-  }, [prod]);
+    loadDefault();
+  }, []);
 
-  function handleToggleVisible(id) {
-    setProducts(
-      products.map(p => {
-        if (p.id === id) {
-          return { ...p, visible: !p.visible };
-        }
-        return p;
-      })
-    );
-  }
-
-  const filterData = async inputValue => {
-    const response = await api.get('products', {
+  const filterRecData = async inputValue => {
+    const response = await api.get('recipients', {
       params: {
         page,
-        prod,
+        rec,
       },
     });
 
-    const data = response.data.map(p => {
+    const data = response.data.map(r => {
       return {
-        value: p.product,
-        label: p.product,
+        value: { name: r.name, id: r.id },
+        label: r.name,
       };
     });
 
@@ -112,78 +75,113 @@ export default function EditProduct() {
     );
   };
 
-  const promiseOptions = inputValue =>
+  const promiseRecOptions = inputValue =>
     new Promise(resolve => {
-      resolve(filterData(inputValue));
+      resolve(filterRecData(inputValue));
     });
 
-  function handleSelection(value) {
+  const filterDelData = async inputValue => {
+    const response = await api.get('deliverers', {
+      params: {
+        page,
+        dname,
+      },
+    });
+
+    const data = response.data.map(d => {
+      return {
+        value: { name: d.name, id: d.id },
+        label: d.name,
+      };
+    });
+
+    return data.filter(i =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };
+
+  const promiseDelOptions = inputValue =>
+    new Promise(resolve => {
+      resolve(filterDelData(inputValue));
+    });
+
+  function handleRecipientSelection(value) {
     if (value === null) {
-      return setProd('');
+      return setRec('');
     }
-    return setProd([value.value]);
+    return setRec([value.value]);
+  }
+
+  function handleDeliverymanSelection(value) {
+    if (value === null) {
+      return setDname('');
+    }
+    return setDname([value.value]);
+  }
+
+  async function handleSubmit({ recipient, deliveryman, product }) {
+    dispatch(registerProductRequest(recipient, deliveryman, product));
   }
 
   return (
     <Wrapper>
-      <h1>Editando encomendas</h1>
-      <Container>
-        <AsyncSelect
-          cacheOptions
-          defaultOptions
-          loadOptions={promiseOptions}
-          styles={customStyles}
-          placeholder="Buscar por encomendas"
-          isClearable
-          onChange={handleSelection}
-          components={componentStyle}
-        />
+      <Form onSubmit={handleSubmit}>
+        <Container>
+          <h1>Edição de encomendas</h1>
+          {console.tron.log(`defValue: ${defValue.toString()}`)}
+          <div>
+            <Link to="/dashboard">
+              <button type="button">
+                <MdChevronLeft size={30} color="#fff" />
+                VOLTAR
+              </button>
+            </Link>
+            <button type="submit">
+              <MdDone size={30} color="#fff" />
+              SALVAR
+            </button>
+          </div>
+        </Container>
 
-        <button type="button">
-          <MdAdd size={30} color="#fff" />
-          <RegLink to="product/edit">CADASTRAR</RegLink>
-        </button>
-      </Container>
-
-      <Table>
-        <THeader>
-          <div>ID</div>
-          <div>Destinatário</div>
-          <div>Entregador</div>
-          <div>Cidade</div>
-          <div>Estado</div>
-          <div>Status</div>
-          <div>Ações</div>
-        </THeader>
-        {products.map(product => (
-          <TRow key={product.id}>
-            <div>#{product.id}</div>
-            <div>{product.recipient.name}</div>
+        <Table>
+          <FirstHeader>
             <div>
-              <Avatar color={`#${product.primary}`}>
-                <p>{product.initials}</p>
-              </Avatar>
-              <p>{product.deliverer.name}</p>
-            </div>
-            <div>{product.recipient.city}</div>
-            <div>{product.recipient.state}</div>
-            <div>
-              <StatusTag status={product.status}>
-                <div />
-                {product.status}
-              </StatusTag>
-            </div>
-            <div>
-              <MdMoreHoriz
-                onClick={() => handleToggleVisible(product.id)}
-                size={30}
-                color="#C6C6C6"
+              Destinatário
+              <AsyncSelect
+                defaultValue={{ label: defValue, value: `` }}
+                name="recipient"
+                cacheOptions
+                defaultOptions
+                loadOptions={promiseRecOptions}
+                styles={customStyles}
+                placeholder="Insira Destinatário"
+                isClearable
+                onChange={handleRecipientSelection}
+                components={componentStyle}
               />
-              <Options visible={product.visible} />
             </div>
-          </TRow>
-        ))}
-      </Table>
+
+            <div>
+              Entregador
+              <AsyncSelect
+                name="deliveryman"
+                cacheOptions
+                defaultOptions
+                loadOptions={promiseDelOptions}
+                styles={customStyles}
+                placeholder="Insira Entregador"
+                isClearable
+                onChange={handleDeliverymanSelection}
+                components={componentStyle}
+              />
+            </div>
+          </FirstHeader>
+          <SecondHeader>
+            Nome do produto
+            <Input name="product" placeholder="Insira Produto" defaultValue />
+          </SecondHeader>
+        </Table>
+      </Form>
     </Wrapper>
   );
 }

@@ -25,7 +25,7 @@ export default function Routes() {
         component={RegisterProduct}
         isPrivate
       />
-      <Route path="/product/edit" exact component={EditProduct} isPrivate />
+      <Route path="/product/edit/:id" exact component={EditProduct} isPrivate />
       <Route path="/delivery/problems" exact component={Problems} isPrivate />
       <Route path="/recipients" exact component={Recipients} isPrivate />
       <Route

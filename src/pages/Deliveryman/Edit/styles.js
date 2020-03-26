@@ -7,7 +7,7 @@ import { MdExpandMore } from 'react-icons/md';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  max-width: 1200px;
+  max-width: 900px;
   margin: 50px auto;
 
   h1 {
@@ -48,17 +48,11 @@ export const Table = styled.div`
   display: flex;
   flex-direction: column;
   background: #fff;
-`;
+  border-radius: 4px;
 
-export const FirstHeader = styled.div`
-  display: grid;
-  grid-template-columns: 6fr 6fr;
-  font-weight: bold;
-  color: #444;
-  padding: 20px;
   > div {
     &:nth-child(1) {
-      margin-right: 20px;
+      margin: 10px 50%;
     }
   }
 `;
@@ -70,8 +64,15 @@ export const SecondHeader = styled.div`
   color: #444;
   padding: 20px;
 
+  > div {
+    &:nth-child(1) {
+      margin-bottom: 10px;
+    }
+  }
+
   input {
     height: 45px;
+    width: 100%;
     margin-top: 10px;
     padding-left: 10px;
     background: #ffffff 0% 0% no-repeat padding-box;
