@@ -68,6 +68,7 @@ export default function Dashboard() {
 
         return {
           ...p,
+          avatar: p.deliverer.avatar.url,
           primary: colors[Math.floor(Math.random() * colors.length)],
           initials: nameInitials(p.deliverer.name),
           status,
@@ -144,7 +145,7 @@ export default function Dashboard() {
           <RegLink to="/product/register">CADASTRAR</RegLink>
         </button>
       </Container>
-
+      {console.tron.log(`PRODUCTS: ${JSON.stringify(products)}`)}
       <Table>
         <THeader>
           <div>ID</div>
@@ -160,9 +161,13 @@ export default function Dashboard() {
             <div>#{product.id}</div>
             <div>{product.recipient.name}</div>
             <div>
-              <Avatar color={`#${product.primary}`}>
-                <p>{product.initials}</p>
-              </Avatar>
+              {product.avatar ? (
+                <img src={product.avatar} alt="" />
+              ) : (
+                <Avatar color={`#${product.primary}`}>
+                  <p>{product.initials}</p>
+                </Avatar>
+              )}
               <p>{product.deliverer.name}</p>
             </div>
             <div>{product.recipient.city}</div>

@@ -43,7 +43,7 @@ export default function Deliveryman() {
   const colors = scheme.colors();
 
   useEffect(() => {
-    async function loadProducts() {
+    async function loadDeliverers() {
       const response = await api.get('deliverers', {
         params: {
           page,
@@ -58,6 +58,7 @@ export default function Deliveryman() {
         }
         return {
           ...d,
+          avatar: d.avatar.url,
           primary: colors[Math.floor(Math.random() * colors.length)],
           initials: nameInitials(d.name),
           visible: false,
@@ -67,7 +68,7 @@ export default function Deliveryman() {
       setDeliverers(data);
     }
 
-    loadProducts();
+    loadDeliverers();
   }, [dname]);
 
   function handleToggleVisible(id) {
@@ -146,9 +147,13 @@ export default function Deliveryman() {
           <TRow key={deliverer.id}>
             <div>#{deliverer.id}</div>
             <div>
-              <Avatar color={`#${deliverer.primary}`}>
-                <p>{deliverer.initials}</p>
-              </Avatar>
+              {deliverer.avatar ? (
+                <img src={deliverer.avatar} alt="" />
+              ) : (
+                <Avatar color={`#${deliverer.primary}`}>
+                  <p>{deliverer.initials}</p>
+                </Avatar>
+              )}
             </div>
             <div>
               <p>{deliverer.name}</p>

@@ -32,8 +32,6 @@ export default function EditProduct() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  console.tron.log(`ID: ${JSON.stringify(+id)}`);
-
   useEffect(() => {
     async function loadDefault() {
       const response = await api.get('/products', {
@@ -128,7 +126,6 @@ export default function EditProduct() {
       <Form onSubmit={handleSubmit}>
         <Container>
           <h1>Edição de encomendas</h1>
-          {console.tron.log(`defValue: ${defValue.toString()}`)}
           <div>
             <Link to="/dashboard">
               <button type="button">
@@ -148,7 +145,6 @@ export default function EditProduct() {
             <div>
               Destinatário
               <AsyncSelect
-                defaultValue={{ label: defValue, value: `` }}
                 name="recipient"
                 cacheOptions
                 defaultOptions
@@ -178,7 +174,11 @@ export default function EditProduct() {
           </FirstHeader>
           <SecondHeader>
             Nome do produto
-            <Input name="product" placeholder="Insira Produto" defaultValue />
+            <Input
+              name="product"
+              placeholder="Insira Produto"
+              defaultValue={defValue}
+            />
           </SecondHeader>
         </Table>
       </Form>

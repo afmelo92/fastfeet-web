@@ -91,6 +91,12 @@ export const TRow = styled.div`
     &:last-child {
       justify-content: end;
     }
+
+    img {
+      height: 35px;
+      width: 35px;
+      border-radius: 50%;
+    }
   }
 `;
 
