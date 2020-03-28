@@ -45,6 +45,7 @@ export default function EditProduct() {
         if (p.id === +id) {
           return p.product;
         }
+        return '';
       });
 
       setDefValue(defaultValue[0].product);

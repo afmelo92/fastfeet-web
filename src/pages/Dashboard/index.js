@@ -145,7 +145,6 @@ export default function Dashboard() {
           <RegLink to="/product/register">CADASTRAR</RegLink>
         </button>
       </Container>
-      {console.tron.log(`PRODUCTS: ${JSON.stringify(products)}`)}
       <Table>
         <THeader>
           <div>ID</div>
@@ -161,7 +160,7 @@ export default function Dashboard() {
             <div>#{product.id}</div>
             <div>{product.recipient.name}</div>
             <div>
-              {product.avatar ? (
+              {product.avatar !== null ? (
                 <img src={product.avatar} alt="" />
               ) : (
                 <Avatar color={`#${product.primary}`}>
@@ -184,7 +183,11 @@ export default function Dashboard() {
                 size={30}
                 color="#C6C6C6"
               />
-              <Options visible={product.visible} id={product.id} />
+              <Options
+                visible={product.visible}
+                id={product.id}
+                path="product"
+              />
             </div>
           </TRow>
         ))}

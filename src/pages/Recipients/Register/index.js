@@ -51,7 +51,7 @@ export default function RegisterRecipient() {
         <Container>
           <h1>Cadastro de destinatários</h1>
           <div>
-            <Link to="/deliveryman">
+            <Link to="/recipients">
               <button type="button">
                 <MdChevronLeft size={30} color="#fff" />
                 VOLTAR

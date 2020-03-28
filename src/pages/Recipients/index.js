@@ -136,7 +136,11 @@ export default function Recipients() {
                 size={30}
                 color="#C6C6C6"
               />
-              <Options visible={recipient.visible} />
+              <Options
+                visible={recipient.visible}
+                id={recipient.id}
+                path="recipients"
+              />
             </div>
           </TRow>
         ))}

@@ -9,8 +9,11 @@ import RegisterProduct from '~/pages/Dashboard/Register';
 import EditProduct from '~/pages/Dashboard/Edit';
 import Recipients from '~/pages/Recipients';
 import RegisterRecipient from '~/pages/Recipients/Register';
+import EditRecipient from '~/pages/Recipients/Edit';
 import Deliveryman from '~/pages/Deliveryman';
 import RegisterDeliveryman from '~/pages/Deliveryman/Register';
+import EditDeliveryman from '~/pages/Deliveryman/Edit';
+
 import Default from '~/pages/Default';
 
 export default function Routes() {
@@ -34,11 +37,23 @@ export default function Routes() {
         component={RegisterRecipient}
         isPrivate
       />
+      <Route
+        path="/recipients/edit/:id"
+        exact
+        component={EditRecipient}
+        isPrivate
+      />
       <Route path="/deliveryman" exact component={Deliveryman} isPrivate />
       <Route
         path="/deliveryman/register"
         exact
         component={RegisterDeliveryman}
+        isPrivate
+      />
+      <Route
+        path="/deliveryman/edit/:id"
+        exact
+        component={EditDeliveryman}
         isPrivate
       />
 

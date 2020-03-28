@@ -165,7 +165,11 @@ export default function Deliveryman() {
                 size={30}
                 color="#C6C6C6"
               />
-              <Options visible={deliverer.visible} />
+              <Options
+                visible={deliverer.visible}
+                id={deliverer.id}
+                path="deliveryman"
+              />
             </div>
           </TRow>
         ))}

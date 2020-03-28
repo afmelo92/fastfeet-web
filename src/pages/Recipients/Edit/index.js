@@ -21,37 +21,13 @@ import {
 } from './styles';
 
 export default function EditRecipient() {
-  const dispatch = useDispatch();
-
-  async function handleSubmit({
-    name,
-    street,
-    number,
-    complement,
-    city,
-    state,
-    zip,
-  }) {
-    dispatch(
-      registerRecipientRequest(
-        name,
-        street,
-        number,
-        complement,
-        city,
-        state,
-        zip
-      )
-    );
-  }
-
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <Container>
-          <h1>Cadastro de destinatários</h1>
+          <h1>Edição de destinatários</h1>
           <div>
-            <Link to="/deliveryman">
+            <Link to="/recipients">
               <button type="button">
                 <MdChevronLeft size={30} color="#fff" />
                 VOLTAR
