@@ -17,3 +17,17 @@ export function registerFailure() {
     type: '@product/REGISTER_FAILURE',
   };
 }
+
+export function deleteItemRequest(id) {
+  return {
+    type: '@product/DELETE_ITEM_REQUEST',
+    payload: { id },
+  };
+}
+
+export function deleteItemSuccess(id) {
+  return {
+    type: '@product/DELETE_ITEM_SUCCESS',
+    payload: { id },
+  };
+}
