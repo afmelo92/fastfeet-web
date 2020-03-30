@@ -22,7 +22,7 @@ export function* registerProduct({ payload }) {
     registerProductSuccess();
 
     toast.success('Produto cadastrado com sucesso!');
-    history.push('/dashboard');
+    history.push('/dashboards');
   } catch (err) {
     toast.error('Falha no cadastro, verifique os dados!');
     yield put(registerFailure());
@@ -37,7 +37,7 @@ export function* deleteItem({ payload }) {
     deleteItemSuccess();
 
     toast.success('Produto excluído com sucesso!');
-    history.push('/dashboard');
+    window.location.reload();
   } catch (err) {
     toast.error('Falha ao excluir, tente novamente mais tarde!');
     yield put(registerFailure());

@@ -5,7 +5,8 @@ import user from './user/sagas';
 import product from './product/sagas';
 import deliveryman from './deliveryman/sagas';
 import recipient from './recipient/sagas';
+import options from './options/sagas';
 
 export default function* rootSaga() {
-  return yield all([auth, user, product, deliveryman, recipient]);
+  return yield all([auth, user, product, deliveryman, recipient, options]);
 }

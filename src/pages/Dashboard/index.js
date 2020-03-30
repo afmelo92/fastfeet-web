@@ -80,7 +80,7 @@ export default function Dashboard() {
     }
 
     loadProducts();
-  }, [prod]);
+  }, [prod, page]);
 
   function handleToggleVisible(id) {
     setProducts(
@@ -185,7 +185,7 @@ export default function Dashboard() {
               />
               <Options
                 visible={product.visible}
-                id={product.id}
+                id={+product.id}
                 path="product"
               />
             </div>

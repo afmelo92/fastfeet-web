@@ -10,9 +10,7 @@ import { Container, OptionList, VisualizeButton } from './styles';
 export default function Options({ visible, id, path }) {
   const dispatch = useDispatch();
 
-  function handleClick(id) {
-    const delId = +id;
-
+  function handleClick(delId) {
     dispatch(deleteItemRequest(delId));
   }
 

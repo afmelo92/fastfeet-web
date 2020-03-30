@@ -5,6 +5,7 @@ import user from './user/reducer';
 import product from './product/reducer';
 import deliveryman from './deliveryman/reducer';
 import recipient from './recipient/reducer';
+import options from './options/reducer';
 
 export default combineReducers({
   auth,
@@ -12,4 +13,5 @@ export default combineReducers({
   product,
   deliveryman,
   recipient,
+  options,
 });
