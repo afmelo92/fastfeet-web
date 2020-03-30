@@ -12,6 +12,20 @@ export function registerProductSuccess(recipient, deliveryman, product) {
   };
 }
 
+export function editProductRequest(id, recipient, deliveryman, product) {
+  return {
+    type: '@product/EDIT_PRODUCT_REQUEST',
+    payload: { id, recipient, deliveryman, product },
+  };
+}
+
+export function editProductSuccess(id, recipient, deliveryman, product) {
+  return {
+    type: '@product/EDIT_PRODUCT_SUCCESS',
+    payload: { id, recipient, deliveryman, product },
+  };
+}
+
 export function registerFailure() {
   return {
     type: '@product/REGISTER_FAILURE',

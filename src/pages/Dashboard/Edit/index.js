@@ -10,7 +10,7 @@ import { Form } from '@unform/web';
 import Input from '~/components/Input';
 import AsyncSelect from '~/components/AsyncSelect';
 
-import { registerProductRequest } from '~/store/modules/product/actions';
+import { editProductRequest } from '~/store/modules/product/actions';
 
 import api from '~/services/api';
 
@@ -43,12 +43,12 @@ export default function EditProduct() {
       // const result = objArray.map(({ foo }) => foo);
       const defaultValue = response.data.filter(p => {
         if (p.id === +id) {
-          return p.product;
+          return p;
         }
         return '';
       });
 
-      setDefValue(defaultValue[0].product);
+      setDefValue(defaultValue[0]);
     }
 
     loadDefault();
@@ -118,13 +118,13 @@ export default function EditProduct() {
     return setDname([value.value]);
   }
 
-  async function handleSubmit({ recipient, deliveryman, product }) {
-    dispatch(registerProductRequest(recipient, deliveryman, product));
+  function handleSubmit({ recipient, deliveryman, product }) {
+    dispatch(editProductRequest(id, recipient, deliveryman, product));
   }
 
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit}>
+      <Form initialData={defValue} onSubmit={handleSubmit}>
         <Container>
           <h1>Edição de encomendas</h1>
           <div>
@@ -175,11 +175,7 @@ export default function EditProduct() {
           </FirstHeader>
           <SecondHeader>
             Nome do produto
-            <Input
-              name="product"
-              placeholder="Insira Produto"
-              defaultValue={defValue}
-            />
+            <Input name="product" placeholder="Insira Produto" />
           </SecondHeader>
         </Table>
       </Form>

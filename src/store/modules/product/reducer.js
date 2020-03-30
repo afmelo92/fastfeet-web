@@ -18,6 +18,16 @@ export default function product(state = INITIAL_STATE, action) {
         draft.product = action.payload.product;
         break;
       }
+      case '@product/EDIT_PRODUCT_REQUEST': {
+        draft.loading = true;
+        draft.product = action.payload.product;
+        break;
+      }
+      case '@product/EDIT_PRODUCT_SUCCESS': {
+        draft.loading = false;
+        draft.product = action.payload.product;
+        break;
+      }
       case '@product/REGISTER_FAILURE': {
         draft.loading = false;
         break;

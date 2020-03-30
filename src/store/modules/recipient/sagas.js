@@ -29,6 +29,30 @@ export function* registerRecipient({ payload }) {
   }
 }
 
+export function* editRecipient({ payload }) {
+  try {
+    const { id, name, street, number, complement, city, state, zip } = payload;
+    yield call(api.put, `recipients/${id}`, {
+      name,
+      street,
+      number,
+      complement,
+      city,
+      state,
+      zip,
+    });
+
+    registerRecipientSuccess();
+
+    toast.success('Destinatário editado com sucesso!');
+    history.push('/dashboard');
+  } catch (err) {
+    toast.error('Falha na edição, verifique os dados!');
+    yield put(registerFailure());
+  }
+}
+
 export default all([
   takeLatest('@recipient/REGISTER_RECIPIENT_REQUEST', registerRecipient),
+  takeLatest('@recipient/EDIT_RECIPIENT_REQUEST', editRecipient),
 ]);

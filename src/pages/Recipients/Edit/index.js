@@ -1,15 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { MdChevronLeft, MdDone } from 'react-icons/md';
 import { Form } from '@unform/web';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import Input from '~/components/Input';
+import api from '~/services/api';
 
-import { registerRecipientRequest } from '~/store/modules/recipient/actions';
+import { editRecipientRequest } from '~/store/modules/recipient/actions';
 
 import {
   Wrapper,
@@ -21,9 +22,60 @@ import {
 } from './styles';
 
 export default function EditRecipient() {
+  const [page, setPage] = useState('all');
+  const [rec, setRec] = useState('');
+  const [defValue, setDefValue] = useState();
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    async function loadDefault() {
+      const response = await api.get('/recipients', {
+        params: {
+          page,
+          rec,
+        },
+      });
+      // const result = objArray.map(({ foo }) => foo);
+      const defaultValue = response.data.filter(r => {
+        if (r.id === +id) {
+          return r;
+        }
+        return '';
+      });
+
+      setDefValue(defaultValue[0]);
+    }
+
+    loadDefault();
+  }, []);
+
+  async function handleSubmit({
+    name,
+    street,
+    number,
+    complement,
+    city,
+    state,
+    zip,
+  }) {
+    dispatch(
+      editRecipientRequest(
+        +id,
+        name,
+        street,
+        number,
+        complement,
+        city,
+        state,
+        zip
+      )
+    );
+  }
+
   return (
     <Wrapper>
-      <Form>
+      <Form onSubmit={handleSubmit} initialData={defValue}>
         <Container>
           <h1>Edição de destinatários</h1>
           <div>

@@ -22,6 +22,16 @@ export default function recipient(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@recipient/EDIT_RECIPIENT_REQUEST': {
+        draft.loading = true;
+        draft.recipient = action.payload.recipient;
+        break;
+      }
+      case '@recipient/EDIT_RECIPIENT_SUCCESS': {
+        draft.loading = false;
+        draft.recipient = action.payload.recipient;
+        break;
+      }
       default:
     }
   });

@@ -6,6 +6,7 @@ import history from '~/services/history';
 
 import {
   registerProductSuccess,
+  editProductSuccess,
   registerFailure,
   deleteItemSuccess,
 } from './actions';
@@ -29,6 +30,25 @@ export function* registerProduct({ payload }) {
   }
 }
 
+export function* editProduct({ payload }) {
+  try {
+    const { id, recipient, deliveryman, product } = payload;
+    yield call(api.put, `products/${id}`, {
+      deliverer_id: deliveryman.id,
+      recipient_id: recipient.id,
+      product,
+    });
+
+    editProductSuccess();
+
+    toast.success('Produto editado com sucesso!');
+    history.push('/dashboards');
+  } catch (err) {
+    toast.error('Falha na edição, verifique os dados!');
+    yield put(registerFailure());
+  }
+}
+
 export function* deleteItem({ payload }) {
   try {
     const { id } = payload;
@@ -46,5 +66,6 @@ export function* deleteItem({ payload }) {
 
 export default all([
   takeLatest('@product/REGISTER_PRODUCT_REQUEST', registerProduct),
+  takeLatest('@product/EDIT_PRODUCT_REQUEST', editProduct),
   takeLatest('@product/DELETE_ITEM_REQUEST', deleteItem),
 ]);

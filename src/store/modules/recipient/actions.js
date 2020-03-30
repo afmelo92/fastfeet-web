@@ -33,3 +33,35 @@ export function registerFailure() {
     type: '@recipient/REGISTER_FAILURE',
   };
 }
+
+export function editRecipientRequest(
+  id,
+  name,
+  street,
+  number,
+  complement,
+  city,
+  state,
+  zip
+) {
+  return {
+    type: '@recipient/EDIT_RECIPIENT_REQUEST',
+    payload: { id, name, street, number, complement, city, state, zip },
+  };
+}
+
+export function editRecipientSuccess(
+  id,
+  name,
+  street,
+  number,
+  complement,
+  city,
+  state,
+  zip
+) {
+  return {
+    type: '@recipient/EDIT_RECIPIENT_SUCCESS',
+    payload: { id, name, street, number, complement, city, state, zip },
+  };
+}
