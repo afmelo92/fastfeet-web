@@ -158,7 +158,11 @@ export default function Dashboard() {
         {products.map(product => (
           <TRow key={product.id}>
             <div>#{product.id}</div>
-            <div>{product.recipient.name}</div>
+            <div>
+              {product.recipient === null
+                ? 'Sem destinatário'
+                : product.recipient.name}
+            </div>
             <div>
               {product.avatar !== null ? (
                 <img src={product.avatar} alt="" />
@@ -167,10 +171,22 @@ export default function Dashboard() {
                   <p>{product.initials}</p>
                 </Avatar>
               )}
-              <p>{product.deliverer.name}</p>
+              <p>
+                {product.deliverer === null
+                  ? 'Sem Entregador'
+                  : product.deliverer.name}
+              </p>
             </div>
-            <div>{product.recipient.city}</div>
-            <div>{product.recipient.state}</div>
+            <div>
+              {product.recipient === null
+                ? 'Sem Cidade'
+                : product.recipient.city}
+            </div>
+            <div>
+              {product.recipient === null
+                ? 'Sem estado'
+                : product.recipient.state}
+            </div>
             <div>
               <StatusTag status={product.status}>
                 <div />

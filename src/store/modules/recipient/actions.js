@@ -65,3 +65,17 @@ export function editRecipientSuccess(
     payload: { id, name, street, number, complement, city, state, zip },
   };
 }
+
+export function deleteItemRequest(id) {
+  return {
+    type: '@product/DELETE_ITEM_REQUEST',
+    payload: { id },
+  };
+}
+
+export function deleteItemSuccess(id) {
+  return {
+    type: '@product/DELETE_ITEM_SUCCESS',
+    payload: { id },
+  };
+}

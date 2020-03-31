@@ -4,7 +4,11 @@ import { toast } from 'react-toastify';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { registerRecipientSuccess, registerFailure } from './actions';
+import {
+  registerRecipientSuccess,
+  registerFailure,
+  deleteItemSuccess,
+} from './actions';
 
 export function* registerRecipient({ payload }) {
   try {
@@ -52,7 +56,23 @@ export function* editRecipient({ payload }) {
   }
 }
 
+export function* deleteItem({ payload }) {
+  try {
+    const { id } = payload;
+    yield call(api.delete, `recipients/${id}`);
+
+    deleteItemSuccess();
+
+    toast.success('Destinatário excluído com sucesso!');
+    history.push('/recipients');
+  } catch (err) {
+    toast.error('Falha ao excluir, tente novamente mais tarde!');
+    yield put(registerFailure());
+  }
+}
+
 export default all([
   takeLatest('@recipient/REGISTER_RECIPIENT_REQUEST', registerRecipient),
   takeLatest('@recipient/EDIT_RECIPIENT_REQUEST', editRecipient),
+  takeLatest('@product/DELETE_ITEM_REQUEST', deleteItem),
 ]);

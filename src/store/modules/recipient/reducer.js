@@ -32,6 +32,16 @@ export default function recipient(state = INITIAL_STATE, action) {
         draft.recipient = action.payload.recipient;
         break;
       }
+      case '@product/DELETE_ITEM_REQUEST': {
+        draft.loading = true;
+        draft.product = action.payload.product;
+        break;
+      }
+      case '@product/DELETE_ITEM_SUCCESS': {
+        draft.loading = false;
+        draft.product = action.payload.product;
+        break;
+      }
       default:
     }
   });
