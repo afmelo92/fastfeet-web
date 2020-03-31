@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { IoMdEye, IoMdCreate } from 'react-icons/io';
 import { MdDeleteForever } from 'react-icons/md';
+import { FaPen } from 'react-icons/fa';
 import { deleteItemRequest as deleteProductRequest } from '~/store/modules/product/actions';
 import { deleteItemRequest as deleteDeliverymanRequest } from '~/store/modules/deliveryman/actions';
 import { deleteItemRequest as deleteRecipientRequest } from '~/store/modules/recipient/actions';
@@ -31,14 +32,18 @@ export default function Options({ visible, id, path }) {
 
   return (
     <Container>
-      <OptionList visible={visible}>
+      <OptionList visible={visible} path={path}>
         <button type="button">
-          <IoMdEye size={20} color="#8E5BE8" />
+          {path === 'delivery/problems' ? (
+            <FaPen size={15} color="#8E5BE8" />
+          ) : (
+            <IoMdEye size={20} color="#8E5BE8" />
+          )}
           <p>Visualizar</p>
         </button>
 
         {path === 'delivery/problems' ? (
-          <button type="button" onClick={() => handleClick(id, path)}>
+          <button type="button" onClick={() => handleClick(id)}>
             <MdDeleteForever size={20} color="#DE3B3B" />
             <p>Cancelar encomenda</p>
           </button>
@@ -48,7 +53,7 @@ export default function Options({ visible, id, path }) {
               <IoMdCreate size={20} color="#4D85EE" />
               <p>Editar</p>
             </VisualizeButton>
-            <button type="button" onClick={() => handleClick(id, path)}>
+            <button type="button" onClick={() => handleClick(id)}>
               <MdDeleteForever size={20} color="#DE3B3B" />
               <p>Excluir</p>
             </button>

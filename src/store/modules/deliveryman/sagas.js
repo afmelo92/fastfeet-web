@@ -6,6 +6,7 @@ import history from '~/services/history';
 
 import {
   registerDeliverymanSuccess,
+  editDeliverymanSuccess,
   registerFailure,
   deleteItemSuccess,
 } from './actions';
@@ -29,6 +30,25 @@ export function* registerDeliveryman({ payload }) {
   }
 }
 
+export function* editDeliveryman({ payload }) {
+  try {
+    const { name, email, avatar_id, id } = payload;
+    yield call(api.put, `deliverers/${id}`, {
+      name,
+      email,
+      avatar_id,
+    });
+
+    editDeliverymanSuccess();
+
+    toast.success('Entregador editado com sucesso!');
+    history.push('/dashboard');
+  } catch (err) {
+    toast.error('Falha na edição, verifique os dados!');
+    yield put(registerFailure());
+  }
+}
+
 export function* deleteItem({ payload }) {
   try {
     const { id } = payload;
@@ -46,5 +66,6 @@ export function* deleteItem({ payload }) {
 
 export default all([
   takeLatest('@deliveryman/REGISTER_DELIVERYMAN_REQUEST', registerDeliveryman),
+  takeLatest('@deliveryman/EDIT_DELIVERYMAN_REQUEST', editDeliveryman),
   takeLatest('@deliveryman/DELETE_ITEM_REQUEST', deleteItem),
 ]);

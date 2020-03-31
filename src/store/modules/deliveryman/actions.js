@@ -18,6 +18,20 @@ export function registerFailure() {
   };
 }
 
+export function editDeliverymanRequest(name, email, avatar_id, id) {
+  return {
+    type: '@deliveryman/EDIT_DELIVERYMAN_REQUEST',
+    payload: { name, email, avatar_id, id },
+  };
+}
+
+export function editDeliverymanSuccess(name, email, avatar_id, id) {
+  return {
+    type: '@deliveryman/EDIT_DELIVERYMAN_SUCCESS',
+    payload: { name, email, avatar_id, id },
+  };
+}
+
 export function deleteItemRequest(id) {
   return {
     type: '@deliveryman/DELETE_ITEM_REQUEST',
