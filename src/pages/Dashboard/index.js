@@ -66,11 +66,19 @@ export default function Dashboard() {
           status = 'ENTREGUE';
         }
 
+        let avatar = '';
+        const initials = '';
+
+        if (p.deliverer !== null) {
+          avatar = p.deliverer.avatar.url;
+          nameInitials(p.deliverer.name);
+        }
+
         return {
           ...p,
-          avatar: p.deliverer.avatar.url,
+          avatar,
           primary: colors[Math.floor(Math.random() * colors.length)],
-          initials: nameInitials(p.deliverer.name),
+          initials,
           status,
           visible: false,
         };
@@ -168,7 +176,7 @@ export default function Dashboard() {
                 <img src={product.avatar} alt="" />
               ) : (
                 <Avatar color={`#${product.primary}`}>
-                  <p>{product.initials}</p>
+                  <p>{product.initials ? product.initials : 'SE'}</p>
                 </Avatar>
               )}
               <p>

@@ -22,6 +22,16 @@ export default function deliveryman(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@deliveryman/DELETE_ITEM_REQUEST': {
+        draft.loading = true;
+        draft.product = action.payload.product;
+        break;
+      }
+      case '@deliveryman/DELETE_ITEM_SUCCESS': {
+        draft.loading = false;
+        draft.product = action.payload.product;
+        break;
+      }
       default:
     }
   });

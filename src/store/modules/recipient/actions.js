@@ -68,14 +68,14 @@ export function editRecipientSuccess(
 
 export function deleteItemRequest(id) {
   return {
-    type: '@product/DELETE_ITEM_REQUEST',
+    type: '@recipient/DELETE_ITEM_REQUEST',
     payload: { id },
   };
 }
 
 export function deleteItemSuccess(id) {
   return {
-    type: '@product/DELETE_ITEM_SUCCESS',
+    type: '@recipient/DELETE_ITEM_SUCCESS',
     payload: { id },
   };
 }

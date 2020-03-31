@@ -71,7 +71,11 @@ export default function Problems() {
                 size={30}
                 color="#C6C6C6"
               />
-              <Options visible={problem.visible} />
+              <Options
+                visible={problem.visible}
+                path="delivery/problems"
+                id={problem.id}
+              />
             </div>
           </TRow>
         ))}

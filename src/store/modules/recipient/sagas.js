@@ -64,7 +64,7 @@ export function* deleteItem({ payload }) {
     deleteItemSuccess();
 
     toast.success('Destinatário excluído com sucesso!');
-    history.push('/recipients');
+    history.push('/dashboard');
   } catch (err) {
     toast.error('Falha ao excluir, tente novamente mais tarde!');
     yield put(registerFailure());
@@ -74,5 +74,5 @@ export function* deleteItem({ payload }) {
 export default all([
   takeLatest('@recipient/REGISTER_RECIPIENT_REQUEST', registerRecipient),
   takeLatest('@recipient/EDIT_RECIPIENT_REQUEST', editRecipient),
-  takeLatest('@product/DELETE_ITEM_REQUEST', deleteItem),
+  takeLatest('@recipient/DELETE_ITEM_REQUEST', deleteItem),
 ]);
