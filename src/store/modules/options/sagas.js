@@ -2,7 +2,7 @@ import { takeLatest, all } from 'redux-saga/effects';
 
 import { setVisible } from './actions';
 
-export function toggleVisible({ payload }) {
+export function toggleVisible() {
   try {
     setVisible();
   } catch (err) {

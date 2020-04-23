@@ -6,6 +6,8 @@ import { MdMoreHoriz, MdAdd } from 'react-icons/md';
 import ColorScheme from 'color-scheme';
 import nameInitials from 'name-initials';
 import AsyncSelect from 'react-select/async';
+import { useModal, Modal } from 'react-morphing-modal';
+import 'react-morphing-modal/dist/ReactMorphingModal.css';
 
 import api from '~/services/api';
 
@@ -28,6 +30,7 @@ export default function Dashboard() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [prod, setProd] = useState('');
+  const { modalProps, open } = useModal();
 
   /**
    * RANDOM COLOR GENERATOR FOR NAME AVATAR
@@ -216,6 +219,7 @@ export default function Dashboard() {
           </TRow>
         ))}
       </Table>
+      <Modal {...modalProps}>Hello World</Modal>
     </Wrapper>
   );
 }

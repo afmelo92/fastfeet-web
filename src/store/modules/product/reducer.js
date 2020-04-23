@@ -3,6 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
   loading: false,
   product: '',
+  modal: false,
 };
 
 export default function product(state = INITIAL_STATE, action) {
@@ -42,6 +43,7 @@ export default function product(state = INITIAL_STATE, action) {
         draft.product = action.payload.product;
         break;
       }
+
       default:
     }
   });
